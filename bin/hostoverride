@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+LIBDIR=$(cd $(dirname $0)/../lib; pwd)
+HO_LIB=$LIBDIR/libhostoverride.dylib
+
+if [ -z $DYLD_INSERT_LIBRARIES ] ; then
+  export DYLD_INSERT_LIBRARIES=$HO_LIB
+else
+  export DYLD_INSERT_LIBRARIES=$HO_LIB:$DYLD_INSERT_LIBRARIES
+fi
+
+exec "$@"
